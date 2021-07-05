@@ -17,14 +17,17 @@ const COUNTRIES_LIST = gql`
       }
       emoji
       name
-   }
+    }
+  continents {
+    name
   }
+}
 `;
 
 const App = () => {
   const { data, loading, error } = useQuery(COUNTRIES_LIST, {client});
   console.log(data, loading, error);
-
+  if (error) throw new Error(`${error.message}`)
   return (
     <>
       <h1>App</h1>
