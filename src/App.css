@@ -1,5 +1,23 @@
 @import 'antd/dist/antd.css';
 
+@media (min-width: 1200px) and (max-width: 1920px) { 
+    .main-wrapper {
+        margin: 0 20%;
+    }
+}
+
+@media (min-width: 800px) and (max-width: 1200px) { 
+    .main-wrapper {
+        margin: 0 15%;
+    }
+}
+
+@media (min-width: 300px) and (max-width: 800px) { 
+    .main-wrapper {
+        margin: 0 5%;
+    }
+}
+
 #root {
     padding: 2% 5%;
 }
@@ -16,7 +34,6 @@
 .main-wrapper {
     display: flex;
     flex-direction: column;
-    margin: 0 30%;
 }
 
 .spinner-wrapper {
