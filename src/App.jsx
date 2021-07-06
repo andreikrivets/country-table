@@ -1,5 +1,5 @@
 import React from 'react';
-import {ApolloClient, InMemoryCache, gql, useQuery} from '@apollo/client';
+import { ApolloClient, InMemoryCache, gql, useQuery } from '@apollo/client';
 
 import './App.css';
 
@@ -9,7 +9,7 @@ import Spinner from './components/Spinner';
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  uri: 'https://countries.trevorblades.com'
+  uri: 'https://countries.trevorblades.com',
 });
 
 const COUNTRIES_LIST = gql`
@@ -22,22 +22,26 @@ const COUNTRIES_LIST = gql`
       emoji
       name
     }
-  continents {
-    name
+    continents {
+      name
+    }
   }
-}
 `;
 
 const App = () => {
-  const { data, loading, error } = useQuery(COUNTRIES_LIST, {client});
+  const { data, loading, error } = useQuery(COUNTRIES_LIST, { client });
 
-  if (error) throw new Error(`${error.message}`)
+  if (error) throw new Error(`${error.message}`);
   return (
     <div className="main-wrapper">
       <Header />
-      { data && !loading ? <TableContent countriesData={data.countries} continentsData={data.continents} /> : <Spinner /> }
+      {data && !loading ? (
+        <TableContent countriesData={data.countries} continentsData={data.continents} />
+      ) : (
+        <Spinner />
+      )}
     </div>
   );
-}
+};
 
 export default App;
