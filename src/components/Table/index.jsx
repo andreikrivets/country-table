@@ -1,10 +1,13 @@
-import React from 'react';
-import { Table, Input, Space, Button } from 'antd';
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
+import { Table, Input, Space, Button, Alert, Tag } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import uniqid from 'uniqid';
 
 const TableContent = (props) => {
   const { countriesData, continentsData } = props;
+  // filter options
+  const [filtredInfo, setFiltredInfo] = useState({});
   // add unique key for each element, fix continent names
   const dataSource = countriesData.map((countryData) => {
     // hardcoding: fix Åland Islands name
@@ -18,11 +21,15 @@ const TableContent = (props) => {
     }
     return { ...countryData, key: uniqid(), continent: countryData.continent.name };
   });
+
   // convert continents names into simple array following antd's schema
   const continents = Object.values(continentsData).map((continent) => ({
     text: continent.name,
     value: continent.name,
   }));
+
+  // update filters
+  const handleTableChange = (_, filters) => setFiltredInfo(filters);
 
   // input-based filter in "names" and "ISO" columns
   const getColumnSearchProps = (dataIndex) => ({
@@ -68,6 +75,7 @@ const TableContent = (props) => {
       },
       align: 'center',
       width: '7%',
+      filteredValue: filtredInfo.code || null,
       ...getColumnSearchProps('code'),
     },
     {
@@ -93,6 +101,7 @@ const TableContent = (props) => {
         if (a.name < b.name) return -1;
         return 0;
       },
+      filteredValue: filtredInfo.name || null,
       ...getColumnSearchProps('name'),
     },
     {
@@ -106,13 +115,37 @@ const TableContent = (props) => {
       },
       width: '25%',
       filters: continents,
+      filteredValue: filtredInfo.continent || null,
       onFilter: (value, record) => record.continent === value,
     },
   ];
 
+  const filterEntries = filtredInfo
+    ? Object.entries(filtredInfo).filter((category) => category[1])
+    : [];
+
   return (
     <>
-      <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 50 }} bordered />
+      <div className="alert-wrapper">
+        {filterEntries.length ? (
+          <Alert
+            type="info"
+            message={`filtred by ${filterEntries.map((category) => ` ${category[0]}`)}`}
+            action={
+              <Button onClick={() => setFiltredInfo({})} type="ghost" size="small">
+                clear
+              </Button>
+            }
+          />
+        ) : null}
+      </div>
+      <Table
+        dataSource={dataSource}
+        columns={columns}
+        pagination={{ pageSize: 50 }}
+        onChange={handleTableChange}
+        bordered
+      />
     </>
   );
 };

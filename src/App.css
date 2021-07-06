@@ -14,7 +14,7 @@
 
 @media (min-width: 300px) and (max-width: 800px) { 
     .main-wrapper {
-        margin: 0 5%;
+        margin: 0 1%;
     }
 }
 
@@ -29,6 +29,17 @@
 
 .logo:hover {
     color: rgb(0, 7, 109)
+}
+
+.alert-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.ant-alert-info {
+    position: fixed;
+    top: 10px;
+    z-index: 2;
 }
 
 .main-wrapper {
