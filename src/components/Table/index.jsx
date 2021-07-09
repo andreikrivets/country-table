@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import { Table, Input, Space, Button, Alert, Tag } from 'antd';
+import { Table, Input, Space, Button, Alert } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import uniqid from 'uniqid';
 
